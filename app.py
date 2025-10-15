@@ -12,12 +12,38 @@ from functools import wraps
 
 load_dotenv()
 app = Flask(__name__, static_folder="static", template_folder="templates")
-app.secret_key = os.getenv("SECRET_KEY", "change_this_secret")
-CORS(app)
+app.secret_key = os.getenv("SECRET_KEY")  # Must be set in Railway environment variables
+if not app.secret_key:
+    raise ValueError("No SECRET_KEY set for Flask application")
 
-cred = credentials.Certificate("zirabafrica-6c117-firebase-adminsdk-fbsvc-739bc1e985.json")
+# Configure CORS for production
+CORS(app, resources={
+    r"/api/*": {"origins": os.getenv("ALLOWED_ORIGINS", "*").split(",")},
+    r"/auth/*": {"origins": os.getenv("ALLOWED_ORIGINS", "*").split(",")},
+})
+
+# Production configurations
+if os.getenv("FLASK_ENV") != "development":
+    app.config["SESSION_COOKIE_SECURE"] = True
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
+    app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+
+firebase_creds = {
+    "type": os.getenv("FIREBASE_TYPE"),
+    "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+    "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+    "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace('\\n', '\n') if os.getenv("FIREBASE_PRIVATE_KEY") else None,
+    "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+    "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+    "auth_uri": os.getenv("FIREBASE_AUTH_URI", "https://accounts.google.com/o/oauth2/auth"),
+    "token_uri": os.getenv("FIREBASE_TOKEN_URI", "https://oauth2.googleapis.com/token"),
+    "auth_provider_x509_cert_url": os.getenv("FIREBASE_AUTH_PROVIDER_CERT_URL", "https://www.googleapis.com/oauth2/v1/certs"),
+    "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_CERT_URL")
+}
+
+cred = credentials.Certificate(firebase_creds)
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://zirabafrica-6c117-default-rtdb.europe-west1.firebasedatabase.app/'
+    'databaseURL': os.getenv("FIREBASE_DATABASE_URL")
 })
 
 def login_required(f):
