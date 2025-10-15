@@ -1,0 +1,14 @@
+{
+    "name": "Zirab Africa",
+    "short_name": "Zirab",
+    "icons": [
+        {
+            "src": "/static/img/flight.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

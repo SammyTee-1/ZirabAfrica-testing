@@ -1,0 +1,75 @@
+.za-alert {
+  position: fixed;
+  left: 50%;
+  top: -100px;
+  /* Slide in from top */
+  transform: translateX(-50%);
+  min-width: 280px;
+  max-width: 400px;
+  width: 60vw;
+  background: #0a5c2d;
+  color: #fff;
+  color: #fff;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(10,92,45,0.10);
+  transition: top 0.85s cubic-bezier(.4,1.6,.4,1), opacity 0.6s, background 0.2s;
+}
+.za-alert.za-alert-show {
+  top: 2.5rem;
+  opacity: 1;
+  pointer-events: auto;
+}
+.za-alert.za-alert-error {
+  background: #d32f2f;
+}
+.za-alert.za-alert-success {
+  background: #0a5c2d;
+}
+
+/* Add this after existing styles */
+
+.za-spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffffe6;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.za-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #0a5c2d;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: za-spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes za-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.za-spinner-container {
+  text-align: center;
+}
+
+.za-spinner-text {
+  margin-top: 1rem;
+  color: #0a5c2d;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+

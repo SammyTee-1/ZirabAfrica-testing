@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZirabAfrica — Login / Signup</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/flights.png') }}">
+  <meta name="msapplication-TileColor" content="#0a5c2d">
+  <meta name="theme-color" content="#0a5c2d">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component.css') }}">
+ 
+</head>
+<body>
+  <div class="za-auth-container">
+    <div class="za-auth-card">
+      <div class="za-auth-header">
+        <img src="{{ url_for('static', filename='img/flights.png') }}" alt="ZirabAfrica Logo" class="za-logo">
+        <h1 class="za-company">ZirabAfrica</h1>
+        <div class="za-auth-desc">Book flights, buses, and more — all in one place.</div>
+      </div>
+      <h2 id="formTitle">Sign In</h2>
+      <form id="authForm" autocomplete="off">
+        <div id="signupFields" style="display:none;">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" name="fullname" autocomplete="name">
+          </div>
+          <div class="input-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" autocomplete="tel">
+          </div>
+        </div>
+        <div class="input-group" id="emailGroup">
+          <label>Email</label>
+          <div class="input-group-inner" style="position:relative;display:flex;align-items:center;">
+            <input type="email" name="email" id="emailInput" required autocomplete="username" style="flex:1; padding-right:90px;">
+            <span id="sendCodeText" class="send-code-text" style="display:none;">Send Code</span>
+          </div>
+        </div>
+        <div class="input-group" id="codeGroup" style="display:none;">
+          <label>Verification Code</label>
+          <input type="text" name="email_code" id="emailCodeInput" autocomplete="one-time-code" maxlength="8">
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <div class="input-group-inner" style="position:relative;display:flex;align-items:center;">
+            <input type="password" name="password" id="mainPasswordInput" required autocomplete="current-password" style="flex:1;">
+            <button type="button" class="show-hide-btn" data-target="mainPasswordInput">Show</button>
+          </div>
+          <span id="forgotPasswordContainer">
+            <a href="#" class="forgot-link" id="forgotPasswordLink" style="color:var(--color-accent);font-size:0.98rem;cursor:pointer;text-decoration:underline;float:right;margin-top:0.3em;">Forgot password?</a>
+          </span>
+        </div>
+        <div class="input-group" id="confirmPasswordGroup" style="flex:1; display:none;">
+          <label>Confirm Password</label>
+          <div class="input-group-inner" style="position:relative;display:flex;align-items:center;">
+            <input type="password" name="confirm_password" id="mainConfirmPasswordInput" autocomplete="new-password" style="flex:1;">
+            <button type="button" class="show-hide-btn" data-target="mainConfirmPasswordInput">Show</button>
+          </div>
+        </div>
+        <div id="agreementField" class="za-agreement" style="display:none;">
+          <label class="za-checkbox">
+            <input type="checkbox" name="agreement">
+            <span class="checkmark"></span>
+            I agree to the <a href="#" target="_blank">Terms &amp; Privacy Policy</a>
+          </label>
+        </div>
+        <button type="submit" class="btn" id="submitBtn">Sign In</button>
+      </form>
+      <div class="switch-link">
+        <span id="switchText">Don't have an account?</span>
+        <a href="#" id="switchMode">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+  <!-- New Forgot Password Modal -->
+  <div id="forgotModal" class="za-auth-card" style="display:none;">
+    <div style="max-width:400px;margin:auto;">
+      <h2 style="margin-bottom:1rem;">Forgot Password</h2>
+      <form id="forgotForm" autocomplete="off">
+        <div class="input-group">
+          <label for="forgotEmail">Email</label>
+          <input type="email" name="forgot_email" id="forgotEmail" required>
+        </div>
+        <div class="input-group" id="forgotCodeGroup" style="display:none;">
+          <label for="forgotCode">Verification Code</label>
+          <input type="text" name="forgot_code" id="forgotCode" maxlength="8">
+        </div>
+        <div class="input-group" id="forgotPasswordGroup" style="display:none;">
+          <label for="forgotPassword">New Password</label>
+          <div class="input-group-inner" style="position:relative;display:flex;align-items:center;">
+            <input type="password" name="forgot_password" id="forgotPassword" style="flex:1;">
+            <button type="button" class="show-hide-btn" data-target="forgotPassword">Show</button>
+          </div>
+        </div>
+        <div class="input-group" id="forgotConfirmPasswordGroup" style="display:none;">
+          <label for="forgotConfirmPassword">Confirm Password</label>
+          <div class="input-group-inner" style="position:relative;display:flex;align-items:center;">
+            <input type="password" name="forgot_confirm_password" id="forgotConfirmPassword" style="flex:1;">
+            <button type="button" class="show-hide-btn" data-target="forgotConfirmPassword">Show</button>
+          </div>
+        </div>
+        <button type="button" class="btn" id="forgotSendCodeBtn">Send Code</button>
+        <button type="submit" class="btn" id="forgotSubmitBtn" style="display:none;margin-top:1em;">Reset Password</button>
+        <button type="button" class="btn" id="forgotCancelBtn" style="margin-top:0.5em;background:var(--color-muted);">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  
+
+  <div id="toast" class="toast"></div>
+
+  <script src="{{ url_for('static', filename='js/component.js') }}"></script>
+  <script>
+    // Show/hide password logic for all password fields
+    document.addEventListener('DOMContentLoaded', function() {
+      function togglePasswordVisibility(btn) {
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.textContent = 'Hide';
+        } else {
+          input.type = 'password';
+          btn.textContent = 'Show';
+        }
+      }
+      document.querySelectorAll('.show-hide-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          togglePasswordVisibility(this);
+        });
+      });
+    });
+  </script>
+  <script>
+    // Show/hide confirm password field based on mode
+    document.addEventListener('DOMContentLoaded', function() {
+      const signupFields = document.getElementById('signupFields');
+      const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+      function updatePasswordRow() {
+        if (signupFields && signupFields.style.display !== 'none') {
+          confirmPasswordGroup.style.display = '';
+        } else {
+          confirmPasswordGroup.style.display = 'none';
+        }
+      }
+      // Listen for mode switch from auth.js
+      const observer = new MutationObserver(updatePasswordRow);
+      observer.observe(signupFields, { attributes: true, attributeFilter: ['style'] });
+      updatePasswordRow();
+
+      // --- New Forgot Password Modal Logic ---
+      const forgotLink = document.getElementById('forgotPasswordLink');
+      const forgotModal = document.getElementById('forgotModal');
+      const forgotForm = document.getElementById('forgotForm');
+      const forgotSendCodeBtn = document.getElementById('forgotSendCodeBtn');
+      const forgotSubmitBtn = document.getElementById('forgotSubmitBtn');
+      const forgotCancelBtn = document.getElementById('forgotCancelBtn');
+      const forgotCodeGroup = document.getElementById('forgotCodeGroup');
+      const forgotPasswordGroup = document.getElementById('forgotPasswordGroup');
+      const forgotConfirmPasswordGroup = document.getElementById('forgotConfirmPasswordGroup');
+      let forgotStep = 1;
+
+      forgotLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        forgotModal.style.display = 'flex';
+        forgotForm.reset();
+        forgotStep = 1;
+        forgotCodeGroup.style.display = 'none';
+        forgotPasswordGroup.style.display = 'none';
+        forgotConfirmPasswordGroup.style.display = 'none';
+        forgotSendCodeBtn.style.display = '';
+        forgotSubmitBtn.style.display = 'none';
+      });
+      forgotCancelBtn.addEventListener('click', function() {
+        forgotModal.style.display = 'none';
+      });
+
+      forgotSendCodeBtn.addEventListener('click', async function() {
+        const email = document.getElementById('forgotEmail').value.trim();
+        if (!email) {
+          zaAlert('Enter your email', 'error');
+          return;
+        }
+        forgotSendCodeBtn.disabled = true;
+        forgotSendCodeBtn.textContent = 'Sending...';
+        try {
+          const resp = await fetch('/api/auth/send_code', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await resp.json();
+          if (data.ok) {
+            zaAlert('Code sent to your email', 'success');
+            forgotCodeGroup.style.display = '';
+            forgotPasswordGroup.style.display = '';
+            forgotConfirmPasswordGroup.style.display = '';
+            forgotSendCodeBtn.style.display = 'none';
+            forgotSubmitBtn.style.display = '';
+            forgotStep = 2;
+          } else {
+            zaAlert(data.error || 'Failed to send code', 'error');
+          }
+        } catch (e) {
+          zaAlert('Network error', 'error');
+        }
+        forgotSendCodeBtn.disabled = false;
+        forgotSendCodeBtn.textContent = 'Send Code';
+      });
+
+      forgotForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('forgotEmail').value.trim();
+        const code = document.getElementById('forgotCode').value.trim();
+        const password = document.getElementById('forgotPassword').value;
+        const confirm = document.getElementById('forgotConfirmPassword').value;
+        if (!email || !code || !password || !confirm) {
+          zaAlert('All fields required', 'error');
+          return;
+        }
+        if (password !== confirm) {
+          zaAlert('Passwords do not match', 'error');
+          return;
+        }
+        forgotSubmitBtn.disabled = true;
+        forgotSubmitBtn.textContent = 'Resetting...';
+        try {
+          const resp = await fetch('/api/auth/reset_password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, code, password })
+          });
+          const data = await resp.json();
+          if (data.ok) {
+            zaAlert('Password reset successful', 'success');
+            setTimeout(() => {
+              forgotModal.style.display = 'none';
+            }, 1200);
+          } else {
+            zaAlert(data.error || 'Failed to reset password', 'error');
+          }
+        } catch (err) {
+          zaAlert('Network error', 'error');
+        }
+        forgotSubmitBtn.disabled = false;
+        forgotSubmitBtn.textContent = 'Reset Password';
+      });
+    });
+  </script>
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
+
+   
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZirabAfrica — Travel, Tickets & Payments</title>
+  <!-- Favicons and mobile icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/flights.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/flights.png') }}">
+  <meta name="msapplication-TileColor" content="#0a5c2d">
+  <meta name="theme-color" content="#0a5c2d">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="" alt="ZirabAfrica"
+          style="width:32px;height:32px;border-radius:50%;background:var(--accent);margin-right:8px;">
+        <span class="fw-semibold text-uppercase" style="color:var(--brand)">ZirabAfrica</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#bookings">My Bookings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger ms-2" id="logoutBtn" type="button">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <h1 class="display-6 fw-bold">Book flights, hotels, tours & pay bills — all in one place</h1>
+          <p class="lead text-muted">International-standard UI, mobile-first, and built with Bootstrap. Try the demo
+            booking forms below — everything saves locally so you can test flows without backend APIs.</p>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block text-center">
+          <img
+            src="https://images.unsplash.com/photo-1502920917128-1aa500764b0b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
+            alt="travel" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section id="services" class="py-5">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2 class="h4 fw-bold text-uppercase" style="color:var(--brand)">Our Services</h2>
+        <p class="text-muted">ZirabAfrica — organized for fast access. Toggle between categories.</p>
+      </div>
+      <!-- ANNOUNCEMENT (marquee style) -->
+      <div id="announcement" class="announce-wrap" style="display:none;">
+        <div class="icon"><i class="bi bi-bell-fill"></i></div>
+        <div class="announce"><span class="text">Promo: Get 5% cashback on Airtime today. Limited time only!</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between mb-3 category-head">
+        <div class="d-flex gap-2 align-items-center">
+          <button class="btn btn-sm btn-outline-secondary cat-btn active" data-cat="payments">💰 Payments &
+            Recharge</button>
+          <button class="btn btn-sm btn-outline-secondary cat-btn" data-cat="travel">✈️ Travel & Tickets</button>
+        </div>
+
+      </div>
+
+      <!-- MINI MOBILE PAYMENTS ROW (non-scrollable, 4 items fit to screen) -->
+      <div id="miniPayments" class="mini-payments" aria-hidden="true" role="toolbar" aria-label="Quick payments">
+        <div class="mini-item" data-service="Airtime" title="Mobile Airtime">
+          <i class="bi bi-phone-fill" aria-hidden="true" style="color:var(--accent)"></i>
+          <div class="label">Airtime</div>
+        </div>
+        <div class="mini-item" data-service="Internet" title="Internet / Data">
+          <i class="bi bi-wifi" aria-hidden="true" style="color:var(--accent)"></i>
+          <div class="label">Data</div>
+        </div>
+        <div class="mini-item" data-service="Electricity" title="Electricity">
+          <i class="bi bi-lightning-charge-fill" aria-hidden="true" style="color:var(--accent)"></i>
+          <div class="label">Electricity</div>
+        </div>
+
+        <div class="mini-item" id="miniViewAll" title="View All services" style="align-items:center;">
+          <i class="bi bi-grid-3x3-gap-fill" aria-hidden="true" style="color:var(--brand)"></i>
+          <div class="label">View All →</div>
+        </div>
+      </div>
+
+
+
+      <!-- PAYMENTS GRID -->
+      <div id="gridWrapper" class="grid-reveal grid-hidden" aria-hidden="true">
+        <!-- Hide button for mobile -->
+        <div class="d-block d-lg-none text-end mb-2">
+          <button id="hideGridBtn" class="btn btn-outline-secondary btn-sm" style="display:none;">
+            <i class="bi bi-chevron-up"></i> Hide
+          </button>
+        </div>
+        <div id="grid-payments" class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mb-4">
+          <!-- Row 1: Airtime, Internet, Betting, Electricity -->
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-phone-fill display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Mobile Airtime</h6>
+              <p class="text-muted small">MTN, Airtel, Glo, 9Mobile</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="topup" data-service="Airtime" onclick="window.location.href='airtime.html'">Top-up</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-wifi display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Internet / Data</h6>
+              <p class="text-muted small">Mtn, Airtel, Spectranet bundles</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="recharge" data-service="Internet">Recharge</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-cash-coin display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Betting</h6>
+              <p class="text-muted small">Fund betting wallets</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Betting">Pay</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-lightning-charge-fill display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Electricity</h6>
+              <p class="text-muted small">PHCN, Ikeja, Eko and more</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Electricity">Pay</button>
+              </div>
+            </div>
+          </div>
+          <!-- Row 2: Satellite TV, Water, Insurance, Taxes & Levies -->
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-tv-fill display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Satellite TV</h6>
+              <p class="text-muted small">DSTV • GOTV • Startimes</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Cable TV">Pay</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-droplet-half display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Water</h6>
+              <p class="text-muted small">Regional water boards</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Water">Pay</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-shield-lock-fill display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Insurance</h6>
+              <p class="text-muted small">Health, travel & vehicle</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Insurance">Pay</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card service-card text-center p-4 h-100">
+              <i class="bi bi-file-earmark-text-fill display-5 mb-3" style="color:var(--accent)"></i>
+              <h6>Taxes & Levies</h6>
+              <p class="text-muted small">Government & municipal payments</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary" data-action="pay" data-service="Tax">Pay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRAVEL GRID (hidden by default) -->
+      <div id="grid-travel" class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="display:none">
+        <div class="col">
+          <div class="card service-card text-center p-4 h-100"><i class="bi bi-plane-fill display-5 mb-3"
+              style="color:var(--accent)"></i>
+            <h6>Flights</h6>
+            <p class="text-muted small">Search and reserve flights worldwide</p><a href="#flightForm"
+              class="btn btn-sm btn-outline-primary mt-3">Book</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card service-card text-center p-4 h-100"><i class="bi bi-building display-5 mb-3"
+              style="color:var(--accent)"></i>
+            <h6>Hotels</h6>
+            <p class="text-muted small">Reserve rooms with flexible dates</p><a href="#hotelForm"
+              class="btn btn-sm btn-outline-primary mt-3">Reserve</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card service-card text-center p-4 h-100"><i class="bi bi-map display-5 mb-3"
+              style="color:var(--accent)"></i>
+            <h6>Tours</h6>
+            <p class="text-muted small">Curated experiences</p><a href="#tourForm"
+              class="btn btn-sm btn-outline-primary mt-3">Explore</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card service-card text-center p-4 h-100"><i class="bi bi-train-front-fill display-5 mb-3"
+              style="color:var(--accent)"></i>
+            <h6>Trains</h6>
+            <p class="text-muted small">Intercity & regional</p><a href="#trainForm"
+              class="btn btn-sm btn-outline-primary mt-3">Book</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card service-card text-center p-4 h-100"><i class="bi bi-bus-front-fill display-5 mb-3"
+              style="color:var(--accent)"></i>
+            <h6>Buses</h6>
+            <p class="text-muted small">Seat selection & routes</p><a href="#busForm"
+              class="btn btn-sm btn-outline-primary mt-3">Book</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMS SECTION -->
+  <section class="pb-5">
+    <div class="container form-section">
+      <div class="tab-content">
+        <!-- Service Type Tabs INSIDE tab-content, above form -->
+        <div class="service-type-tabs mb-3">
+          <a href="#" class="service-type-tab active d-flex flex-column align-items-center text-decoration-none"
+            data-type="flight">
+            <img src="{{ url_for('static', filename='img/flights.png') }}" alt="Flight">
+            <span class="fw-semibold">Flight</span>
+          </a>
+          <a href="#" class="service-type-tab d-flex flex-column align-items-center text-decoration-none"
+            data-type="train">
+            <img src="{{ url_for('static', filename='img/train.png') }}" alt="Train">
+            <span class="fw-semibold">Train</span>
+          </a>
+          <a href="#" class="service-type-tab d-flex flex-column align-items-center text-decoration-none"
+            data-type="bus">
+            <img src="{{ url_for('static', filename='img/bus.webp') }}" alt="Bus">
+            <span class="fw-semibold">Bus</span>
+          </a>
+        </div>
+        <div class="card p-4 shadow-sm">
+          <!-- Only Flights tab -->
+          <!-- FLIGHT -->
+          <div class="tab-pane fade show active" id="flightForm">
+            <form class="row g-3 align-items-end needs-validation" novalidate id="form-flight">
+              <div class="col-12 mb-3">
+                <div class="trip-toggle d-flex justify-content-center align-items-center p-1 mb-2"
+                  style="background:#f4fafd;border-radius:16px;">
+                  <input type="radio" class="btn-check" name="tripType" id="oneWay" value="oneway" autocomplete="off"
+                    checked>
+                  <label class="trip-btn flex-fill text-center py-2 mb-0" for="oneWay" id="labelOneWay"
+                    style="border-radius:12px;cursor:pointer;">One Way</label>
+                  <input type="radio" class="btn-check" name="tripType" id="roundTrip" value="round" autocomplete="off">
+                  <label class="trip-btn flex-fill text-center py-2 mb-0" for="roundTrip" id="labelRoundTrip"
+                    style="border-radius:12px;cursor:pointer;">Round Trip</label>
+                </div>
+              </div>
+              <div class="row w-100">
+                <div class="col-6 mb-2 position-relative">
+                  <label class="form-label">From</label>
+                  <div class="airport-selected d-flex flex-column align-items-start position-relative" id="fromSelected"
+                    style="min-height:48px; cursor:pointer;">
+                    <span class="airport-abbr fw-bold" style="font-size:2.1rem;line-height:1;"></span>
+                    <span class="airport-state text-muted" style="font-size:0.95rem;line-height:1;"></span>
+                    <span class="airport-placeholder text-muted"
+                      style="font-size:1rem;line-height:1; position:absolute; left:16px; top:16px; pointer-events:none;">Select
+                      origin</span>
+                  </div>
+                  <input type="hidden" name="from" required>
+                  <div class="invalid-feedback">Origin is required</div>
+                </div>
+                <div class="col-6 mb-2 position-relative text-end">
+                  <label class="form-label">To</label>
+                  <div class="airport-selected d-flex flex-column align-items-end position-relative" id="toSelected"
+                    style="min-height:48px; cursor:pointer;">
+                    <span class="airport-abbr fw-bold" style="font-size:2.1rem;line-height:1;"></span>
+                    <span class="airport-state text-muted" style="font-size:0.95rem;line-height:1;"></span>
+                    <span class="airport-placeholder text-muted"
+                      style="font-size:1rem;line-height:1; position:absolute; right:16px; top:16px; pointer-events:none;">Select
+                      destination</span>
+                  </div>
+                  <input type="hidden" name="to" required>
+                  <div class="invalid-feedback">Destination is required</div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Depart</label>
+                <input type="date" class="form-control fw-bold" name="depart" required>
+                <div class="invalid-feedback">Select date</div>
+              </div>
+              <div class="col-md-4 mb-2" id="returnField" style="display:none;">
+                <label class="form-label">Return</label>
+                <input type="date" class="form-control fw-bold" name="return" placeholder="Add Return">
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Passengers</label>
+                <button type="button" class="form-control fw-bold text-start" id="openPassengerModal">
+                  <span id="passengerSummary">1 Adult</span>
+                </button>
+                <input type="hidden" name="adult" value="1" required>
+                <input type="hidden" name="children" value="0" required>
+                <input type="hidden" name="infant" value="0" required>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Class</label>
+                <select class="form-select fw-bold" name="class" required>
+                  <option value="Economy" selected>Economy</option>
+                  <option value="Business">Business</option>
+                  <option value="First">First</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Currency</label>
+                <select class="form-select fw-bold" id="currencySelect">
+                  <option value="USD" selected>USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                  <option value="NGN">NGN</option>
+                  <option value="KES">KES</option>
+                  <option value="ZAR">ZAR</option>
+                  <!-- Add more as needed -->
+                </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary w-100 py-2" type="submit"
+                  style="background:#00bfff;border:none;font-weight:600;font-size:1.1rem;">Search Flights</button>
+              </div>
+            </form>
+            <!-- Add results container here -->
+            <div id="results" class="mt-4"></div>
+          </div>
+        </div>
+
+      </div>
+  </section>
+
+  <!-- CONTACT + FOOTER -->
+  <footer class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="fw-bold">ZirabAfrica</h5>
+          <p class="text-muted">Sample international-standard demo. To connect real suppliers (airlines, hotels, buses)
+            integrate their APIs on the server side and replace localStorage with secure backend calls.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <small>© <span id="year"></span> ZirabAfrica. Built with Bootstrap & Bootstrap Icons.</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AIRPORT SELECTION MODAL -->
+  <div class="modal fade" id="airportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select Origin & Destination</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5 position-relative">
+              <label class="form-label">From</label>
+              <div class="position-relative">
+                <input type="text" class="form-control airport-search-input" id="modalFromInput"
+                  placeholder="Search airport or city...">
+                <span class="clear-input" id="clearFromInput"
+                  style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1.2rem;display:none;z-index:2;">
+                  <i class="bi bi-x-circle-fill text-muted"></i>
+                </span>
+              </div>
+              <div class="airport-options mt-1" id="modalFromOptions"></div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end justify-content-center pb-3">
+              <button class="btn btn-outline-secondary" id="swapAirports"><i
+                  class="bi bi-arrow-left-right"></i></button>
+            </div>
+            <div class="col-md-5 position-relative">
+              <label class="form-label">To</label>
+              <div class="position-relative">
+                <input type="text" class="form-control airport-search-input" id="modalToInput"
+                  placeholder="Search airport or city...">
+                <span class="clear-input" id="clearToInput"
+                  style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1.2rem;display:none;z-index:2;">
+                  <i class="bi bi-x-circle-fill text-muted"></i>
+                </span>
+              </div>
+              <div class="airport-options mt-1" id="modalToOptions"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passenger Selection Modal -->
+  <div class="modal fade" id="passengerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-lg">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-people-fill me-2 text-primary"></i>Passengers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body pt-2 pb-0">
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center justify-content-between px-2 py-3 rounded-3 bg-light">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-fill fs-3 text-primary"></i>
+                <div>
+                  <div class="fw-semibold">Adult</div>
+                  <div class="text-muted small">12y+</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="adultMinus"><i
+                    class="bi bi-dash"></i></button>
+                <span class="fw-bold fs-5" id="adultCount">1</span>
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="adultPlus"><i
+                    class="bi bi-plus"></i></button>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between px-2 py-3 rounded-3 bg-light">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-fill fs-3 text-warning"></i>
+                <div>
+                  <div class="fw-semibold">Children</div>
+                  <div class="text-muted small">2y - 12y</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="childrenMinus"><i
+                    class="bi bi-dash"></i></button>
+                <span class="fw-bold fs-5" id="childrenCount">0</span>
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="childrenPlus"><i
+                    class="bi bi-plus"></i></button>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between px-2 py-3 rounded-3 bg-light">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-fill fs-3 text-info"></i>
+                <div>
+                  <div class="fw-semibold">Infant</div>
+                  <div class="text-muted small">Below 2y</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="infantMinus"><i
+                    class="bi bi-dash"></i></button>
+                <span class="fw-bold fs-5" id="infantCount">0</span>
+                <button type="button" class="btn btn-outline-secondary btn-sm px-2 py-0" id="infantPlus"><i
+                    class="bi bi-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-primary w-100 rounded-3" id="applyPassengerSelection"
+            data-bs-dismiss="modal">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION MODAL -->
+  <div class="modal fade" id="notifyModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notifyTitle">Notification</h5><button class="btn-close"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="notifyBody"></div>
+        <div class="modal-footer"><button class="btn btn-primary" data-bs-dismiss="modal">OK</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLIGHT RESULTS MODAL -->
+  <div class="modal fade" id="flightResultsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content" style="background:#f7fbf7;">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-airplane-engines me-2 text-primary"></i>Flight Results</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0" id="flightResultsBody" style="overflow-y:auto;max-height:calc(100vh - 60px);">
+          <!-- Results will be injected here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="toast" class="toast"></div>
+
+
+
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/component.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/payments.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+
+
+
+</body>
+
+</html>

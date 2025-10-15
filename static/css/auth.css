@@ -1,0 +1,339 @@
+.input-group-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-group-inner .show-hide-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: 0.98rem;
+  cursor: pointer;
+  padding: 0 0.5em;
+  z-index: 2;
+  user-select: none;
+}
+.input-group-inner .show-hide-btn:hover,
+.input-group-inner .show-hide-btn:focus {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+:root {
+  --brand: #0a5c2d;
+  --accent: #d4af37;
+  --muted: #6c757d;
+  --card-bg: rgba(255,255,255,0.65);
+  --glass: rgba(255,255,255,0.06);
+  --color-primary: var(--brand);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-bg-card: var(--card-bg);
+  --color-bg-glass: var(--glass);
+  --color-hover: #bfa133; /* slightly darker gold for hover */
+}
+*{box-sizing:border-box}
+/* Root variables for theme */
+:root {
+  --color-primary: #0a5c2d;
+  --color-accent: #ca9b00;
+  --color-muted: #6c757d;
+  --color-bg-card: rgba(255,255,255,0.85);
+  --color-bg-glass: rgba(255,255,255,0.10);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-card: 0 8px 32px rgba(10,92,45,0.10);
+  --shadow-btn: 0 2px 8px rgba(212,175,55,0.10);
+}
+
+/* Always stack password fields vertically (list) on all screens */
+#passwordRow {
+  display: flex;
+  flex-direction: column !important;
+  gap: 0.5em !important;
+}
+body {
+  background: none;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.za-auth-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+
+.za-auth-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(10,92,45,0.13);
+  padding: 2.5rem 2rem 2rem 2rem;
+  width: 100%;
+  max-width: 420px; /* wider on desktop */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border: 1.5px solid #e6e6e6;
+}
+
+.za-auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.za-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.za-company {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0 0 0.2rem 0;
+  letter-spacing: 0.5px;
+}
+.za-auth-desc {
+  font-size: 1.02rem;
+  color: var(--color-muted);
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+
+.za-auth-card h2 {
+  margin-bottom: 1.1rem;
+  color: var(--color-accent);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.input-group {
+  width: 350px;
+  max-width: 530px;
+  margin-bottom: 1.05rem;
+  display: flex;
+  flex-direction: column;
+}
+.input-group label {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+.input-group input {
+  padding: 0.7rem 0.9rem;
+  border: 1.2px solid var(--color-accent);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+  background: #f8fafb;
+}
+.input-group input:focus {
+  border: 1.5px solid var(--color-accent);
+  background: #fff;
+}
+
+.input-group-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-group-inner input[type="email"] {
+  padding-right: 90px !important;
+}
+.input-group-inner .btn {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 50px;
+  z-index: 2;
+  margin: 0;
+  padding: 0.5em 0.7em;
+  font-size: 0.98rem;
+}
+
+.send-code-text {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-accent);
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  z-index: 2;
+  padding: 0;
+  margin: 0;
+  transition: color 0.18s;
+}
+.send-code-text:hover, .send-code-text:focus {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.za-agreement {
+  width: 100%;
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.za-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  user-select: none;
+}
+.za-checkbox input[type="checkbox"] {
+  accent-color: var(--color-accent);
+  margin-right: 0.5em;
+  width: 1.3em;
+  height: 1.3em;
+}
+.za-checkbox a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  margin-left: 0.2em;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.85rem 0;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.13rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-btn, 0 2px 8px rgba(212,175,55,0.10));
+}
+.btn:hover, .btn:focus {
+  background: var(--color-primary);
+}
+
+.switch-link {
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+.switch-link a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 0.3rem;
+  font-weight: 600;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+  min-width: 180px;
+  max-width: 90vw;
+  background: #000000;
+  color: #fff;
+  padding: 0.9rem 1.4rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.3s;
+  text-align: center;
+}
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 480px) {
+  .za-auth-card {
+    max-width: 99vw;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .za-auth-header {
+    margin-bottom: 0.7rem;
+  }
+  .za-company {
+    font-size: 1.1rem;
+  }
+  .za-auth-card h2 {
+    font-size: 1.1rem;
+  }
+  .input-group input {
+    font-size: 0.98rem;
+    padding: 0.6rem 0.7rem;
+    width: 350px; /* wider input fields on mobile */
+    box-sizing: border-box;
+  }
+   .btn {
+    font-size: 1rem;
+    padding: 0.7rem 0;
+  }
+}
+
+
+
+
+/* Center the forgot password modal on desktop */
+#forgotModal.za-auth-card {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 8px 32px rgba(10,92,45,0.13);
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  max-width: 420px;
+  width: 100%;
+  height: 82vh;
+}
+
+@media (max-width: 480px) {
+  #forgotModal.za-auth-card {
+    left: 0;
+    top: 0;
+    transform: none;
+    width: 100vw;
+    max-width: 99vw;
+    height: 100vh;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+}

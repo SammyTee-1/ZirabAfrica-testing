@@ -1,0 +1,98 @@
+/* recharge-custom.css - Custom styles for the new Airtime Recharge modal with network buttons */
+
+#rechargeModal .network-btn-group {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+#rechargeModal .network-btn {
+  flex: 1 1 0;
+  min-width: 90px;
+  padding: 0.7rem 0.5rem;
+  border: 2px solid var(--color-bg-glass, #e9ecef);
+  border-radius: var(--radius-md, 12px);
+  background: #fff;
+  color: var(--color-primary, #0a5c2d);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border 0.18s, background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.06);
+  outline: none;
+  position: relative;
+}
+#rechargeModal .network-btn.selected,
+#rechargeModal .network-btn:focus {
+  border: 2px solid var(--color-accent, #d4af37);
+  background: var(--color-bg-card, #fffbe6);
+  color: var(--color-accent, #d4af37);
+  box-shadow: 0 4px 16px rgba(212,175,55,0.13);
+}
+#rechargeModal .network-btn .logo {
+  display: block;
+  margin: 0 auto 0.3rem auto;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #f7fbf7;
+  box-shadow: 0 1px 4px rgba(10,92,45,0.06);
+}
+#rechargeModal .network-btn[data-network="MTN"] {
+  border-color: #ffd70022;
+  color: #ffcc00;
+}
+#rechargeModal .network-btn[data-network="MTN"].selected {
+  background: #fffbe6;
+  color: #ffcc00;
+  border-color: #ffcc00;
+}
+#rechargeModal .network-btn[data-network="Airtel"] {
+  border-color: #ff000022;
+  color: #e60000;
+}
+#rechargeModal .network-btn[data-network="Airtel"].selected {
+  background: #fff0f0;
+  color: #e60000;
+  border-color: #e60000;
+}
+#rechargeModal .network-btn[data-network="Glo"] {
+  border-color: #00a85922;
+  color: #00a859;
+}
+#rechargeModal .network-btn[data-network="Glo"].selected {
+  background: #f0fff0;
+  color: #00a859;
+  border-color: #00a859;
+}
+#rechargeModal .network-btn[data-network="9Mobile"] {
+  border-color: #6cc24a22;
+  color: #6cc24a;
+}
+#rechargeModal .network-btn[data-network="9Mobile"].selected {
+  background: #f7fff7;
+  color: #6cc24a;
+  border-color: #6cc24a;
+}
+#rechargeModal .network-btn .network-label {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  #rechargeModal .network-btn-group {
+    gap: 0.4rem;
+  }
+  #rechargeModal .network-btn {
+    min-width: 70px;
+    font-size: 0.97rem;
+    padding: 0.5rem 0.2rem;
+  }
+  #rechargeModal .network-btn .logo {
+    width: 26px;
+    height: 26px;
+  }
+}
